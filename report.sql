@@ -100,6 +100,15 @@ GROUP BY students.student_id
 HAVING num_courses > 4;
 
 .print "16. Find students whose average grade is above the overall average grade of all students."
+SELECT students.name,ROUND(AVG(grades.grade),2)AS avg_stud_grade
+FROM students
+JOIN grades ON grades.student_id = students.student_id
+GROUP BY students.student_id
+HAVING avg_stud_grade > (SELECT AVG(grades.grade) FROM grades);
 
 
 .print "17. Show the teacher name and the average grade of their course(s)."
+SELECT courses.teacher, ROUND(AVG(grades.grade),2) AS avg_grade, courses.course_name
+FROM grades
+JOIN courses ON courses.course_id = grades.course_id
+GROUP BY courses.teacher;
